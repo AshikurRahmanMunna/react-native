@@ -6,6 +6,7 @@ import {
   ScrollView,
   RefreshControl,
   FlatList,
+  SectionList,
 } from 'react-native';
 
 const App = () => {
@@ -32,6 +33,28 @@ const App = () => {
     { name: 'item 21' },
     { name: 'item 22' },
   ]);
+  const data = [
+    {
+      title: 'Title 1',
+      data: ['Item 1', 'Item 1-2', 'Item 1-3', 'Item 1-4']
+    },
+    {
+      title: 'Title 2',
+      data: ['Item 2-1', 'Item 2-2']
+    },
+    {
+      title: 'Title 3',
+      data: ['Item 3-1']
+    },
+    {
+      title: 'Title 4',
+      data: ['Item 4-1', 'Item 4-2', 'Item 4-3']
+    },
+    {
+      title: 'Title 5',
+      data: ['Item 5-1', 'Item 5-2', 'Item 5-3', 'Item 5-4']
+    },
+  ]
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = () => {
     setRefreshing(true);
@@ -39,12 +62,10 @@ const App = () => {
     setRefreshing(false);
   }
   return (
-    <FlatList
-      data={items}
+    <SectionList
+      sections={data}
       keyExtractor={(item, index) => index}
-      renderItem={({ item }) => <View style={styles.item}>
-        <Text style={styles.text}>{item.name}</Text>
-      </View>}
+      renderItem={({ item }) => <Text style={styles.text}>{item}</Text>}
       refreshControl={
         <RefreshControl
           refreshing={refreshing}
@@ -52,7 +73,24 @@ const App = () => {
           colors={['#ff00ff']}
         />
       }
+      renderSectionHeader={({ section }) => <View style={styles.item}>
+        <Text style={styles.text}>{section.title}</Text>
+      </View>}
     />
+    // <FlatList
+    //   data={items}
+    //   keyExtractor={(item, index) => index}
+    //   renderItem={({ item }) => <View style={styles.item}>
+    //     <Text style={styles.text}>{item.name}</Text>
+    //   </View>}
+    //   refreshControl={
+    //     <RefreshControl
+    //       refreshing={refreshing}
+    //       onRefresh={onRefresh}
+    //       colors={['#ff00ff']}
+    //     />
+    //   }
+    // />
     // <ScrollView style={styles.body} refreshControl={
     //   <RefreshControl
     //     refreshing={refreshing}
